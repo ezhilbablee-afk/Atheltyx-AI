@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Athelytix AI — Next-Gen Sports Coaching Platform</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="app-header">
+    <div class="brand-section">
+      <div class="brand-logo">⚡</div>
+      <div>
+        <div class="brand-title">ATHELYTIX AI</div>
+      </div>
+      <div class="brand-badge">PRO COACHING SUITE</div>
+    </div>
+
+    <div class="header-controls">
+      <div class="iot-status-pill">
+        <div class="pulse-dot"></div>
+        <span>IoT Live: Polar H10 / Catapult 50Hz</span>
+      </div>
+
+      <div class="role-picker">
+        <label style="font-size: 11px; color: var(--text-muted); margin-right: 6px;">ROLE:</label>
+        <select id="roleSelector">
+          <option value="athlete">Athlete / Player</option>
+          <option value="coach" selected>Head Coach / Trainer</option>
+          <option value="analyst">Sports Science Analyst</option>
+          <option value="admin">System Administrator</option>
+        </select>
+      </div>
+
+      <div class="athlete-picker">
+        <label style="font-size: 11px; color: var(--text-muted); margin-right: 6px;">ATHLETE:</label>
+        <select id="athleteSelector">
+          <option value="2" selected>Leo Silva (Soccer - Attacking Mid)</option>
+          <option value="3">Elena Rostova (Tennis - Pro Singles)</option>
+          <option value="4">Marcus Vance (Basketball - Point Guard)</option>
+        </select>
+      </div>
+
+      <span id="currentRoleDisplay" class="role-badge">Role: COACH</span>
+    </div>
+  </header>
+
+  <!-- Secondary Tab Navigation -->
+  <nav class="tab-navigation">
+    <button class="tab-btn active" data-tab="overview">📊 Telemetry & Overview</button>
+    <button class="tab-btn" data-tab="biomechanics">🦾 AI Biomechanics & CV</button>
+    <button class="tab-btn" data-tab="training">📅 Adaptive Training</button>
+    <button class="tab-btn" data-tab="injury">🛡️ Injury Prediction (ACWR)</button>
+    <button class="tab-btn" data-tab="strategy">♟️ Tactical Game Strategy</button>
+    <button class="tab-btn" data-tab="skills">🎯 Skill Radar & Video</button>
+    <button class="tab-btn" data-tab="coach">🤖 Virtual AI Coach</button>
+    <button class="tab-btn" data-tab="gamification">🏆 Gamification & Badges</button>
+  </nav>
+
+  <!-- Main View Area -->
+  <main class="main-content">
+
+    <!-- Global Athlete Profile Banner -->
+    <div class="athlete-profile-banner">
+      <div class="banner-left">
+        <img id="athleteBannerAvatar" class="athlete-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150" alt="Athlete">
+        <div>
+          <h1 id="athleteBannerName" class="athlete-name">Leo Silva <span style="font-size:13px; color:var(--cyan); background:rgba(0,242,254,0.1); padding:2px 8px; border-radius:12px;">Active Squad</span></h1>
+          <div id="athleteBannerSport" class="athlete-meta">Soccer • Attacking Midfielder • Age 22 • 182.5 cm / 76 kg</div>
+        </div>
+      </div>
+      <div class="banner-stats">
+        <div class="banner-stat-box">
+          <div id="bannerVo2" class="val">61.5 ml/kg/min</div>
+          <div class="lbl">VO2 Max (Aerobic Power)</div>
+        </div>
+        <div class="banner-stat-box">
+          <div id="bannerRestHr" class="val">48 bpm</div>
+          <div class="lbl">Resting Heart Rate</div>
+        </div>
+        <div class="banner-stat-box">
+          <div id="bannerMaxHr" class="val">196 bpm</div>
+          <div class="lbl">Max HR Threshold</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 1: OVERVIEW & REAL-TIME WEARABLE IOT TELEMETRY -->
+    <section id="tab-overview" class="tab-panel active">
+      <!-- Live Metrics Grid -->
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-header">
+            <span class="metric-title">Heart Rate</span>
+            <span class="metric-icon">❤️</span>
+          </div>
+          <div class="metric-val"><span id="metric-hr">154</span> <span class="metric-unit">bpm</span></div>
+          <div class="metric-trend trend-good">● Aerobic Zone 3 (78% HR Max)</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-header">
+            <span class="metric-title">Heart Rate Variability</span>
+            <span class="metric-icon">📈</span>
+          </div>
+          <div class="metric-val"><span id="metric-hrv">62.4</span> <span class="metric-unit">ms</span></div>
+          <div class="metric-trend trend-good">● High Parasympathetic Tone</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-header">
+            <span class="metric-title">Speed / Velocity</span>
+            <span class="metric-icon">⚡</span>
+          </div>
+          <div class="metric-val"><span id="metric-speed">24.5</span> <span class="metric-unit">km/h</span></div>
+          <div class="metric-trend trend-good">● Top Speed Today: 32.8 km/h</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-header">
+            <span class="metric-title">Muscle Load (sEMG)</span>
+            <span class="metric-icon">💪</span>
+          </div>
+          <div class="metric-val"><span id="metric-muscle">72.0%</span></div>
+          <div class="metric-trend trend-warning">▲ Hamstring Load Rising</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-header">
+            <span class="metric-title">Fatigue Index</span>
+            <span class="metric-icon">🔋</span>
+          </div>
+          <div class="metric-val"><span id="metric-fatigue">28.5%</span></div>
+          <div class="metric-trend trend-good">● Optimal Readiness</div>
+        </div>
+      </div>
+
+      <!-- Dashboard Layout -->
+      <div class="dashboard-layout">
+        <div class="card">
+          <div class="card-title">
+            <span>📡 Real-Time Telemetry Streaming Waveform (50 Hz Ingestion)</span>
+            <span style="font-size: 11px; color: var(--cyan); font-family: monospace;">STREAMING LIVE</span>
+          </div>
+          <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">Dynamic optical PPG and GPS micro-sensor tracking for instantaneous aerobic cardiac output.</p>
+          <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 10px; height: 160px;">
+            <canvas id="hrChartCanvas" width="800" height="140" style="width:100%; height:100%;"></canvas>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <span>🎯 Daily AI Coaching Recommendation</span>
+          </div>
+          <div style="font-size: 13px; line-height: 1.6; color: var(--text-secondary);">
+            <p><strong>Workload status:</strong> Athlete Leo Silva is in prime competitive shape. Chronic adaptation index is healthy at 1.12 ACWR.</p>
+            <div class="action-tip-box" style="margin-top: 14px;">
+              <strong>Coach Cue:</strong> Prioritize 10-meter acceleration bursts with full 90-second recovery to protect posterior chain kinetics before tomorrow's tactical session.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: AI BIOMECHANICS & COMPUTER VISION -->
+    <section id="tab-biomechanics" class="tab-panel">
+      <div class="card">
+        <div class="card-title">
+          <span>🦾 AI Computer Vision Pose Estimation & Skeletal Kinematics</span>
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <label style="font-size: 12px; color: var(--text-secondary);">MOVEMENT PRESET:</label>
+            <select id="movementSelect" style="background:var(--bg-secondary); color:#fff; border:1px solid var(--border-color); padding:4px 8px; border-radius:6px; font-size:12px;">
+              <option value="Soccer Strike">Soccer Instep Strike</option>
+              <option value="Basketball Jump Shot">Basketball Jump Shot Release</option>
+              <option value="Sprint Acceleration">Sprint Acceleration Drive</option>
+              <option value="Tennis Forehand">Tennis Rotational Forehand</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="cv-container">
+          <!-- Canvas Visualizer -->
+          <div class="canvas-wrapper">
+            <canvas id="poseCanvas"></canvas>
+            <div class="canvas-hud">
+              <div id="cv-phase-name" class="hud-pill">PHASE: PEAK IMPACT</div>
+              <div id="cv-frame-count" class="hud-pill">FRAME: 6/12</div>
+              <div class="hud-pill" style="color:var(--emerald);">CV CONFIDENCE: 98.4%</div>
+            </div>
+            <div class="canvas-controls">
+              <button id="toggleCvPlayBtn" class="btn-secondary">⏸ Pause</button>
+              <span style="font-size: 12px; color: var(--text-muted);">Real-Time 33-Keypoint BlazePose / OpenPose Tracker</span>
+              <button class="btn-primary" onclick="alert('Kinematic freeze snapshot logged to athlete profile.')">📸 Log Snapshot</button>
+            </div>
+          </div>
+
+          <!-- Kinematics & Angle Breakdown -->
+          <div>
+            <h3 style="font-size: 14px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-secondary);">Live Angular Kinematics</h3>
+            <div class="angles-list">
+              <div class="angle-row">
+                <span class="name">Strike Knee Flexion Angle</span>
+                <span class="deg">44.2° <span style="font-size:11px; color:var(--emerald);">[Optimal: 42-52°]</span></span>
+              </div>
+              <div class="angle-row">
+                <span class="name">Hip Torque & Extension</span>
+                <span class="deg">174.6° <span style="font-size:11px; color:var(--emerald);">[Optimal: 170-180°]</span></span>
+              </div>
+              <div class="angle-row">
+                <span class="name">Trunk Forward Lean</span>
+                <span class="deg">15.1° <span style="font-size:11px; color:var(--emerald);">[Target: 12-18°]</span></span>
+              </div>
+              <div class="angle-row">
+                <span class="name">Bilateral Knee Symmetry</span>
+                <span class="deg">94.8% <span style="font-size:11px; color:var(--emerald);">Balanced</span></span>
+              </div>
+            </div>
+
+            <div class="form-score-box">
+              <div style="font-size: 12px; color: var(--text-secondary); text-transform: uppercase;">Biomechanical Form Efficiency Score</div>
+              <div class="num">89.4 <span style="font-size: 18px; color: var(--text-muted);">/ 100</span></div>
+              <div style="font-size: 12px; color: var(--emerald); font-weight: 600; margin-top: 4px;">Grade A: Elite Kinematic Chain Alignment</div>
+            </div>
+
+            <div style="margin-top: 14px; background: rgba(255,255,255,0.03); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); font-size: 12px; line-height: 1.5;">
+              <strong style="color: var(--cyan);">AI Biomechanic Cue:</strong> Plant foot is perfectly anchored 15cm lateral to the ball axis. Minimal knee valgus deflection detected during deceleration.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: PERSONALIZED TRAINING PROGRAMS -->
+    <section id="tab-training" class="tab-panel">
+      <div class="card">
+        <div class="card-title">
+          <div>
+            <span id="trainingProgramTitle">Elite Match Speed & Kinetic Chain Optimization</span>
+            <div id="trainingGoalText" style="font-size: 12px; color: var(--text-secondary); font-weight: normal; margin-top: 4px;">Target: Maximize sprint speed to 33.5 km/h while reducing hamstring shear stress</div>
+          </div>
+          <button id="btnAdaptTraining" class="btn-primary coach-only">⚡ Re-Calibrate Adaptive Plan</button>
+        </div>
+
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th>Day</th>
+              <th>Session Focus</th>
+              <th>Intensity</th>
+              <th>Duration</th>
+              <th>Adaptive Prescription & Target Drills</th>
+            </tr>
+          </thead>
+          <tbody id="trainingScheduleBody">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TAB 4: INJURY PREDICTION & ACWR -->
+    <section id="tab-injury" class="tab-panel">
+      <div class="acwr-container">
+        <div class="gauge-meter-wrapper">
+          <h3 style="font-size: 14px; text-transform: uppercase; color: var(--text-secondary);">Acute-to-Chronic Workload Ratio (ACWR)</h3>
+          <div id="acwrDisplayVal" class="acwr-val-display">1.12</div>
+          <div style="font-size: 13px; font-weight: 600; color: var(--emerald);">Optimal "Sweet Spot" Corridor</div>
+
+          <div class="acwr-zones-bar">
+            <div class="zone-under" title="Under-trained (<0.8)"></div>
+            <div class="zone-sweet" title="Sweet Spot (0.8 - 1.3)"></div>
+            <div class="zone-danger" title="Danger Zone (>1.5)"></div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); font-family: monospace;">
+            <span>Under-prepared (&lt;0.8)</span>
+            <span>Sweet Spot (0.8 - 1.3)</span>
+            <span>Danger (&gt;1.5)</span>
+          </div>
+
+          <div style="margin-top: 18px; text-align: left; font-size: 12px; color: var(--text-secondary); line-height: 1.6;">
+            <div><strong>Acute Load (7-Day Sum):</strong> 2,450 Arbitrary Units (AU)</div>
+            <div><strong>Chronic Load (28-Day Avg):</strong> 2,180 Arbitrary Units (AU)</div>
+            <div><strong>Injury Risk Level:</strong> <span id="injuryRiskLevel" class="trend-good">LOW (28.5%)</span></div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom: 0;">
+          <h3 class="card-title">🛡️ Soft Tissue Vulnerability & Preventive Prescriptions</h3>
+          <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">AI multi-sensor anomaly detection cross-referencing eccentric strain with HRV suppression.</p>
+          <ul id="injuryRecsList" style="padding-left: 18px; font-size: 13px; color: var(--text-secondary); line-height: 1.6;">
+            <!-- Dynamically populated -->
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: TACTICAL GAME STRATEGY -->
+    <section id="tab-strategy" class="tab-panel">
+      <div class="dashboard-layout">
+        <div class="card">
+          <div class="card-title">
+            <span>♟️ Interactive Pitch Simulation & Counter-Formation Board</span>
+            <button id="btnRunSimulation" class="btn-primary">🎲 Run Monte Carlo Simulation</button>
+          </div>
+          <div id="tacticalPitch" class="tactical-pitch"></div>
+          <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--text-secondary);">
+            <div><span style="color:#60a5fa; font-weight:bold;">● Blue:</span> Home Team (4-2-3-1 Asymmetric Dynamic)</div>
+            <div><span style="color:#f87171; font-weight:bold;">● Red:</span> Opponent Red Stars FC (4-3-3 High Press)</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <span>Monte Carlo Match Probabilities</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <div style="background:rgba(255,255,255,0.03); padding:14px; border-radius:8px; border:1px solid var(--border-color);">
+              <div style="font-size:11px; text-transform:uppercase; color:var(--text-muted);">Simulated Win Probability</div>
+              <div id="simWinPct" style="font-size:36px; font-weight:800; color:var(--emerald);">68.4%</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.03); padding:14px; border-radius:8px; border:1px solid var(--border-color);">
+              <div style="font-size:11px; text-transform:uppercase; color:var(--text-muted);">Expected Score (xG)</div>
+              <div id="simExpGoals" style="font-size:24px; font-weight:700; color:var(--cyan);">2.15 - 0.88</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.03); padding:14px; border-radius:8px; border:1px solid var(--border-color);">
+              <div style="font-size:11px; text-transform:uppercase; color:var(--text-muted);">Recommended Tactical Tempo</div>
+              <div id="simRecPace" style="font-size:14px; font-weight:600; color:#fff;">High tempo vertical direct into channels</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 6: SKILL RADAR & VIDEO ANALYSIS -->
+    <section id="tab-skills" class="tab-panel">
+      <div class="dashboard-layout">
+        <div class="card">
+          <div class="card-title">
+            <span>🎯 5-Axis Athletic Skill Radar vs Pro Standards</span>
+            <div style="font-size:12px; display:flex; gap:12px;">
+              <span style="color:var(--cyan);">■ Athlete</span>
+              <span style="color:var(--amber);">--- Peer Benchmark</span>
+            </div>
+          </div>
+          <div class="radar-container">
+            <canvas id="skillRadarCanvas"></canvas>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <span>📹 AI Video Breakdown: Instep Drive Shot</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 12px; font-size: 13px;">
+            <div style="background: rgba(16, 185, 129, 0.08); border-left: 3px solid var(--emerald); padding: 10px; border-radius: 4px;">
+              <strong>00:04.2 — Plant Foot Anchor:</strong> Plant foot 15cm from ball, allowing maximal rotational torque through the pelvis.
+            </div>
+            <div style="background: rgba(245, 158, 11, 0.08); border-left: 3px solid var(--amber); padding: 10px; border-radius: 4px;">
+              <strong>00:07.8 — Impact Deceleration:</strong> Knee angle at 38° is slightly rigid. Soften strike knee to 45° to eliminate quadriceps tendon spike.
+            </div>
+            <div style="background: rgba(16, 185, 129, 0.08); border-left: 3px solid var(--emerald); padding: 10px; border-radius: 4px;">
+              <strong>00:12.1 — Follow-through:</strong> Clean energy dissipation across thoracic rotational axis without lumbar hyperextension.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 7: VIRTUAL AI COACH & VOICE ASSISTANT -->
+    <section id="tab-coach" class="tab-panel">
+      <div class="card" style="max-width: 900px; margin: 0 auto;">
+        <div class="card-title">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span>🤖 Athelytix Virtual AI Coach</span>
+            <span style="font-size: 11px; background: rgba(0,242,254,0.1); color: var(--cyan); padding: 2px 8px; border-radius: 10px;">Domain: Sports Science & Biomechanics</span>
+          </div>
+          <button id="voiceToggleBtn" class="btn-secondary" style="font-size:12px; padding:4px 10px;">🔊 Voice On</button>
+        </div>
+
+        <div class="quick-prompts">
+          <span style="font-size:12px; color:var(--text-muted); align-self:center;">Quick Inquiries:</span>
+          <button class="quick-pill" data-prompt="My right hamstring feels stiff after sprint intervals, what should I do?">Hamstring Stiffness</button>
+          <button class="quick-pill" data-prompt="How can I improve my 10-meter acceleration mechanics?">Sprint Acceleration</button>
+          <button class="quick-pill" data-prompt="What should my post-match nutrition protocol look like?">Recovery Nutrition</button>
+          <button class="quick-pill" data-prompt="How should we counteract their high-pressing defensive line?">Tactical Counter-Press</button>
+        </div>
+
+        <div class="chat-window">
+          <div id="chatMessages" class="chat-messages">
+            <div class="chat-bubble assistant">
+              <div>Welcome, Leo. I'm actively monitoring your telemetry and biomechanics stream. Your current ACWR is 1.12, resting HR is 48 bpm, and your form efficiency is 89.4%. Ask me anything about your training adjustments, fatigue management, or tactical plans.</div>
+            </div>
+          </div>
+          <div class="chat-input-bar">
+            <input id="chatInput" type="text" placeholder="Ask your AI coach for biomechanics cues, fatigue recovery, or tactical tips...">
+            <button id="chatSendBtn" class="btn-primary">Send</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 8: GAMIFICATION & BADGES -->
+    <section id="tab-gamification" class="tab-panel">
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-header"><span class="metric-title">XP Points</span><span>⭐</span></div>
+          <div class="metric-val" id="gamificationPoints">3,450</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-header"><span class="metric-title">Mastery Level</span><span>🏅</span></div>
+          <div class="metric-val" id="gamificationLevel">Lvl 7</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-header"><span class="metric-title">Training Streak</span><span>🔥</span></div>
+          <div class="metric-val" id="gamificationStreak">14 Days</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title">🏆 Unlocked Athletic Mastery Badges</h3>
+        <div id="badgesContainer" class="badges-grid">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Application Scripts -->
+  <script src="/static/js/biomechanics.js"></script>
+  <script src="/static/js/iot_stream.js"></script>
+  <script src="/static/js/strategy.js"></script>
+  <script src="/static/js/voice_coach.js"></script>
+  <script src="/static/js/app.js"></script>
+
+</body>
+</html>
